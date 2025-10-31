@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Simple Alarm</string>
+    <string name="set_alarm_button">アラームを設定</string>
+    <string name="no_alarm_set">次のアラームは未設定です</string>
+    <string name="next_alarm_template">次のアラーム: %1$s</string>
+    <string name="alarm_set_confirmation">アラームを設定しました</string>
+    <string name="alarm_triggered_title">アラームです！</string>
+    <string name="alarm_time_label">設定時刻: %1$s</string>
+    <string name="alarm_time_label_placeholder">設定時刻</string>
+    <string name="dismiss_button">停止</string>
+</resources>
