@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyber Neon Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;700&family=Prompt:wght@200;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <main class="container">
+        <section class="hero">
+            <div class="glitch" data-text="CYBER NEON PLAYGROUND">CYBER NEON PLAYGROUND</div>
+            <p class="tagline">めちゃ面白くてカッコいい未来型エンタメポータルへようこそ</p>
+            <button class="pulse-button" id="launchButton">ENTER THE HYPERSPACE</button>
+        </section>
+
+        <section class="grid">
+            <article class="card" id="missionCard">
+                <h2>ミッションジェネレーター</h2>
+                <p>ボタンを押して、今日のアドベンチャーを受信しよう。</p>
+                <button class="neon-button" id="missionButton">ミッションを受信</button>
+                <p class="output" id="missionOutput">???</p>
+            </article>
+
+            <article class="card" id="beatCard">
+                <h2>シンセビートループ</h2>
+                <p>サウンドを構築して、宇宙サイバービートを鳴らそう。</p>
+                <div class="beat-grid" id="beatGrid"></div>
+                <button class="neon-button" id="beatPlay">PLAY</button>
+                <button class="neon-button" id="beatStop">STOP</button>
+            </article>
+
+            <article class="card" id="auraCard">
+                <h2>ムードオーラ</h2>
+                <p>現在の気分を選ぶと、オーラが変化する。</p>
+                <div class="aura-options">
+                    <button class="chip" data-mood="zen">ZEN</button>
+                    <button class="chip" data-mood="nova">NOVA</button>
+                    <button class="chip" data-mood="chaos">CHAOS</button>
+                </div>
+                <div class="aura-display" id="auraDisplay">
+                    <span>SELECT YOUR AURA</span>
+                </div>
+            </article>
+        </section>
+
+        <section class="terminal">
+            <h2>ネオンターミナル</h2>
+            <p>コマンドを入力すると、AIがサイバーレスポンスを返すぞ！</p>
+            <div class="terminal-window">
+                <div class="terminal-output" id="terminalOutput"></div>
+                <div class="terminal-input">
+                    <span class="prompt">></span>
+                    <input type="text" id="terminalInput" placeholder="hack / vibe / boost など" autocomplete="off" />
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2088 Neon Collective. Built with ❤️‍🔥 + ⚡</p>
+        </footer>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
