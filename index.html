@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>原村役場 DX推進室｜『やめるだけ』業務棚卸しワークショップ</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #050014;
+      --bg-alt: #140837;
+      --accent: #35f7ff;
+      --accent-hot: #ff6fe2;
+      --accent-sun: #ffd66b;
+      --accent-soft: rgba(53, 247, 255, 0.16);
+      --highlight: #ffa6f2;
+      --text-primary: #f7f5ff;
+      --text-muted: #9fb0ff;
+      --card-bg: rgba(12, 16, 48, 0.8);
+      --card-border: rgba(53, 247, 255, 0.28);
+      --section-gap: clamp(3rem, 6vw, 6rem);
+      --glow: rgba(53, 247, 255, 0.42);
+      --hero-radius: clamp(36px, 8vw, 84px);
+      font-family: 'BIZ UDGothic', 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'YuGothic', 'Meiryo', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(140% 120% at 0% 0%, rgba(53, 247, 255, 0.28), transparent 60%),
+        radial-gradient(120% 120% at 100% 0%, rgba(255, 111, 226, 0.32), transparent 65%),
+        radial-gradient(120% 120% at 100% 100%, rgba(255, 214, 107, 0.24), transparent 68%),
+        linear-gradient(135deg, var(--bg) 0%, #07022a 45%, var(--bg-alt) 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+      scroll-behavior: smooth;
+      isolation: isolate;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(53, 247, 255, 0.18), transparent 65%);
+      opacity: 0.65;
+      pointer-events: none;
+      animation: panGradient 28s ease-in-out infinite;
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at top right, rgba(255, 111, 226, 0.26), transparent 70%),
+        radial-gradient(circle at 20% 80%, rgba(255, 214, 107, 0.22), transparent 75%),
+        repeating-conic-gradient(from 45deg, rgba(255, 255, 255, 0.04) 0deg 15deg, transparent 15deg 30deg);
+      animation: twinkle 24s ease-in-out infinite;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(14px);
+      background: rgba(7, 3, 30, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 12px 40px rgba(8, 6, 30, 0.35);
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: var(--scroll-progress, 0%);
+      background: linear-gradient(90deg, rgba(53, 247, 255, 0.6), rgba(255, 111, 226, 0.7), rgba(255, 214, 107, 0.6));
+      transition: width 0.2s ease;
+    }
+
+    .nav {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1.1rem clamp(1.5rem, 4vw, 3rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .nav span {
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      position: relative;
+      padding-left: 1.8rem;
+      font-weight: 600;
+    }
+
+    .nav span::before {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.85), transparent 70%);
+      box-shadow: 0 0 18px rgba(255, 214, 107, 0.55);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .nav a {
+      color: var(--text-primary);
+      text-decoration: none;
+      border: 1px solid transparent;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      position: relative;
+      transition: border 0.3s, color 0.3s, background 0.3s, transform 0.3s;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible,
+    .nav a.active {
+      border-color: rgba(255, 255, 255, 0.35);
+      background: linear-gradient(120deg, rgba(53, 247, 255, 0.16), rgba(255, 111, 226, 0.18));
+      color: var(--text-primary);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 18px 30px rgba(8, 6, 30, 0.45);
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 6vw, 4rem);
+      position: relative;
+    }
+
+    .hero {
+      display: grid;
+      gap: 2rem;
+      margin-top: clamp(1rem, 4vh, 3rem);
+      padding: clamp(2.4rem, 6vw, 4rem);
+      border-radius: var(--hero-radius);
+      background:
+        linear-gradient(135deg, rgba(53, 247, 255, 0.18), rgba(255, 111, 226, 0.12)) border-box,
+        linear-gradient(120deg, rgba(11, 17, 54, 0.92), rgba(8, 9, 35, 0.88)) padding-box;
+      border: 1px solid transparent;
+      box-shadow: 0 55px 120px rgba(5, 10, 40, 0.6);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(0px);
+      opacity: 0.65;
+      z-index: -1;
+      animation: orbFloat 16s ease-in-out infinite;
+    }
+
+    .hero::before {
+      width: clamp(160px, 40vw, 320px);
+      height: clamp(160px, 40vw, 320px);
+      background: radial-gradient(circle at 30% 30%, rgba(53, 247, 255, 0.55), transparent 70%);
+      top: -18%;
+      right: -5%;
+    }
+
+    .hero::after {
+      width: clamp(200px, 50vw, 360px);
+      height: clamp(200px, 50vw, 360px);
+      background: radial-gradient(circle at 60% 60%, rgba(255, 111, 226, 0.45), transparent 70%);
+      bottom: -30%;
+      left: -12%;
+      animation-direction: reverse;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      line-height: 1.12;
+      margin: 0;
+      background: linear-gradient(90deg, #ffffff, var(--accent), var(--accent-hot), var(--accent-sun), #ffffff);
+      text-shadow: 0 10px 40px rgba(53, 247, 255, 0.35);
+      background-size: 280%;
+      animation: shimmer 12s ease-in-out infinite;
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 48ch;
+      color: var(--text-muted);
+    }
+
+    .hero .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+      background:
+        linear-gradient(120deg, rgba(53, 247, 255, 0.22), rgba(255, 111, 226, 0.18), rgba(255, 214, 107, 0.2)) border-box,
+        linear-gradient(120deg, rgba(4, 8, 32, 0.82), rgba(6, 8, 40, 0.82)) padding-box;
+      border: 1px solid transparent;
+      width: fit-content;
+      backdrop-filter: blur(6px);
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero .tagline::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: sweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    section {
+      margin-top: var(--section-gap);
+      position: relative;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: auto 10% -2rem 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+      opacity: 0.35;
+    }
+
+    section.hero::before {
+      display: none;
+    }
+
+    section h2 {
+      margin-bottom: 1.5rem;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      position: relative;
+      display: inline-block;
+      padding-left: clamp(0rem, 2vw, 0.6rem);
+      color: var(--accent-hot);
+      background: linear-gradient(120deg, #ffffff 0%, var(--accent) 35%, var(--accent-hot) 65%, var(--accent-sun) 100%);
+    }
+
+    section h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.4rem;
+      width: 75%;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hot), transparent);
+    }
+
+    .grid {
+      display: grid;
+      gap: clamp(1.4rem, 3vw, 2.4rem);
+    }
+
+    .two-col {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: start;
+    }
+
+    .card {
+      background:
+        linear-gradient(155deg, rgba(16, 22, 64, 0.94), rgba(7, 9, 32, 0.9)) padding-box,
+        linear-gradient(135deg, rgba(53, 247, 255, 0.35), rgba(255, 111, 226, 0.3), rgba(255, 214, 107, 0.28)) border-box;
+      border: 1px solid transparent;
+      border-radius: 24px;
+      padding: clamp(1.6rem, 3vw, 2.2rem);
+      box-shadow: 0 28px 60px rgba(3, 9, 28, 0.45);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, box-shadow 0.6s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 55%);
+      opacity: 0.75;
+      z-index: -1;
+      transition: opacity 0.4s ease;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .card p,
+    .card li {
+      color: var(--text-muted);
+    }
+
+    .card:hover,
+    .card:focus-within {
+      transform: translateY(-10px);
+      border-color: transparent;
+      box-shadow: 0 38px 90px rgba(6, 16, 54, 0.68);
+    }
+
+    .card:hover::before,
+    .card:focus-within::before {
+      opacity: 1;
+    }
+
+    .tagline strong,
+    strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin: 0.8rem 0;
+    }
+
+    li + li {
+      margin-top: 0.4rem;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background:
+        linear-gradient(120deg, rgba(53, 247, 255, 0.22), rgba(255, 111, 226, 0.22), rgba(255, 214, 107, 0.22)) border-box,
+        linear-gradient(140deg, rgba(6, 10, 38, 0.9), rgba(10, 12, 40, 0.9)) padding-box;
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-shadow: 0 2px 12px rgba(7, 10, 40, 0.6);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 1.8rem;
+      border-left: 2px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      gap: 1.4rem;
+    }
+
+    .timeline-item h4 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--accent);
+    }
+
+    .timeline-item time {
+      display: inline-block;
+      margin-bottom: 0.4rem;
+      color: var(--highlight);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: calc(-1.95rem);
+      margin-top: 0.4rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hot));
+      box-shadow: 0 0 0 6px rgba(53, 247, 255, 0.18);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 0.6rem;
+    }
+
+    .highlight-card {
+      background:
+        linear-gradient(150deg, rgba(255, 111, 226, 0.28), rgba(53, 247, 255, 0.18)) padding-box,
+        linear-gradient(120deg, rgba(255, 214, 107, 0.5), rgba(255, 111, 226, 0.5)) border-box;
+      border: 1px solid transparent;
+    }
+
+    .highlight-card::before {
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 60%);
+    }
+
+    .list-grid {
+      display: grid;
+      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background:
+        linear-gradient(120deg, rgba(53, 247, 255, 0.2), rgba(255, 111, 226, 0.22)) border-box,
+        linear-gradient(120deg, rgba(4, 6, 28, 0.85), rgba(8, 9, 36, 0.85)) padding-box;
+      color: var(--text-primary);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      box-shadow: 0 15px 35px rgba(8, 6, 30, 0.4);
+    }
+
+    .faq dt {
+      font-weight: 600;
+      color: var(--accent-hot);
+      margin-top: 1rem;
+    }
+
+    .faq dd {
+      margin-left: 0;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .footer {
+      margin-top: var(--section-gap);
+      padding: 2.8rem 0;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.8rem;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes sweep {
+      0%,
+      70% {
+        transform: translateX(-100%);
+      }
+      80% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: translateY(-50%) scale(1);
+        opacity: 0.85;
+      }
+      50% {
+        transform: translateY(-50%) scale(1.25);
+        opacity: 1;
+      }
+    }
+
+    @keyframes orbFloat {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      40% {
+        transform: translate3d(6%, -4%, 0) scale(1.05);
+      }
+      70% {
+        transform: translate3d(-4%, 6%, 0) scale(0.95);
+      }
+    }
+
+    @keyframes panGradient {
+      0% {
+        transform: translate3d(-6%, -4%, 0) scale(1.05);
+        opacity: 0.45;
+      }
+      50% {
+        transform: translate3d(6%, 3%, 0) scale(1.12);
+        opacity: 0.75;
+      }
+      100% {
+        transform: translate3d(-4%, 5%, 0) scale(1.04);
+        opacity: 0.55;
+      }
+    }
+
+    @keyframes twinkle {
+      0%,
+      100% {
+        opacity: 0.45;
+        transform: scale(1);
+      }
+      40% {
+        opacity: 0.65;
+        transform: scale(1.05);
+      }
+      70% {
+        opacity: 0.75;
+        transform: scale(1.02) translate3d(-2%, 1%, 0);
+      }
+    }
+
+    @supports ((background-clip: text) or (-webkit-background-clip: text)) {
+      .hero h1 {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      section h2 {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        position: static;
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .timeline {
+        border-left: none;
+        padding-left: 0;
+      }
+      .timeline-item::before {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <span>Harahara DX Studio</span>
+      <nav>
+        <a href="#overview">概要</a>
+        <a href="#sessions">セッション</a>
+        <a href="#board">付箋ボード</a>
+        <a href="#faq">FAQ</a>
+        <a href="#details">実施情報</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero reveal" aria-labelledby="hero-title">
+      <div class="tagline">無駄、即停止。時間、奪還。</div>
+      <h1 id="hero-title">原村役場 DX推進室『やめるだけ』業務棚卸しワークショップ</h1>
+      <p>公式の場で批判なく合意し、庁議承認で正式廃止。住民価値に乏しい作業を見つけ、ただ「やめる」ことで原村の行政を軽やかにアップデートします。</p>
+    </section>
+
+    <section id="overview">
+      <h2>概要</h2>
+      <div class="grid two-col">
+        <article class="card reveal">
+          <h3>目的と原則</h3>
+          <ul>
+            <li>住民価値に乏しく慣習で続く低付加価値業務を停止し、生産性を向上。</li>
+            <li>ノーブレーム。対象は人ではなく作業。</li>
+            <li>法令・通達・要綱の最小要件は対象外（上乗せ・横出しは見直し可）。</li>
+            <li>結果は庁議（課長会議）で承認後に正式廃止。DX推進室長が全庁に一元周知。</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <h3>「無駄な仕事」とは？</h3>
+          <p>本人ですら「なくしても住民価値に影響がない」と感じる仕事。手間がかかっても目的（住民の利便・安全・公平）に結びつかない作業を指します。</p>
+          <div class="pill-list">
+            <div class="pill">Bullshit Jobs視点</div>
+            <div class="pill">住民価値に非直結</div>
+            <div class="pill">慣習を疑う</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>5つの型 — 行政あるあるの無駄</h2>
+      <div class="list-grid">
+        <article class="card reveal">
+          <h3>取り巻き型（Flunkies）</h3>
+          <p>形式や体裁のためだけの役割。意思決定や住民価値に寄与しない同席・押印・取り次ぎなど。</p>
+          <strong>例</strong>
+          <ul>
+            <li>「見た」だけの押印回覧、沈黙で同席する全課参加会議。</li>
+            <li>来客対応に常時2名体制で張り付き。</li>
+            <li>式典での“立会い要員”。</li>
+          </ul>
+          <p><strong>やめ方：</strong>回覧はチャット・ポータル掲示で済ませ押印撤廃。役割のない出席は資料送付のみ。</p>
+        </article>
+        <article class="card reveal">
+          <h3>用心棒型（Goons）</h3>
+          <p>住民価値を生まない“守り”の追加負担。不要なチェックや差し戻しで手続きを重くする。</p>
+          <ul>
+            <li>「念のため」の追加書類要求。</li>
+            <li>軽微な様式差での差し戻しや二重押印。</li>
+            <li>窓口での不必要なたらい回し。</li>
+          </ul>
+          <p><strong>やめ方：</strong>法令最小要件に戻し、入口で一次受付。例外時のみ追加確認。</p>
+        </article>
+        <article class="card reveal">
+          <h3>継ぎはぎ係（Duct-tapers）</h3>
+          <p>仕組みの不備を人手で埋める“一時しのぎ”。二重入力や手作業整形が中心。</p>
+          <ul>
+            <li>基幹にもあるのにExcel台帳へ再入力。</li>
+            <li>PDFを印刷→再スキャンしてPDF化。</li>
+            <li>電話メモを別様式へ再入力。</li>
+          </ul>
+          <p><strong>やめ方：</strong>台帳は片方を廃止。入力はフォーム一本化で転記自体をやめる。</p>
+        </article>
+        <article class="card reveal">
+          <h3>箱にチェック係（Box-tickers）</h3>
+          <p>チェック欄を埋めること自体が目的化。誰も使わない報告・記録のための作業。</p>
+          <ul>
+            <li>誰も読まない週報・月次一覧。</li>
+            <li>監査名目の未読レポート、惰性のチェックリスト。</li>
+            <li>完了報告メールのテンプレ送付。</li>
+          </ul>
+          <p><strong>やめ方：</strong>決定事項＋ToDoをボードに記録。定期一覧は請求時のみ。</p>
+        </article>
+        <article class="card reveal">
+          <h3>仕事発注屋（Taskmasters）</h3>
+          <p>無用な管理・指示で他人の仕事を増やす役割。目的不明の会議招集や過剰な資料要求。</p>
+          <ul>
+            <li>目的が曖昧な定例会議。</li>
+            <li>説明会のための説明会。</li>
+            <li>誰も意思決定に使わない報告会。</li>
+          </ul>
+          <p><strong>やめ方：</strong>目的・アウトプット未定の会議は開催せず、資料は決定に必要な1枚に限定。</p>
+        </article>
+        <article class="card highlight-card reveal">
+          <h3>対象外（やめない）</h3>
+          <ul>
+            <li>法令・通達・要綱・協定で明確に求められる作業。</li>
+            <li>住民の安全・公平・透明性を担保する統制。</li>
+            <li>個人情報・会計・監査で必須の記録（上乗せ部分は見直し可）。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>簡易セルフチェック（5問）</h2>
+      <article class="card reveal">
+        <ul>
+          <li>住民の利便・安全・公平に直接つながっているか？</li>
+          <li>条文や通達など「根拠」を指差しで示せるか？</li>
+          <li>同じ情報の再入力・転記になっていないか？</li>
+          <li>過去90日、意思決定や監査で使われたか？</li>
+          <li>例外対応のために全体へ恒常的な負担をかけていないか？</li>
+        </ul>
+        <p>→ 2つ以上で「No」なら、<strong>停止実験（一カ月）</strong>の候補。</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>見つけるコツ</h2>
+      <div class="grid two-col">
+        <article class="card reveal">
+          <ul>
+            <li>「いつからやっているか分からない」。</li>
+            <li>「やめたら誰が困る？」に即答できない。</li>
+            <li>「報告物を誰が見て何を決める？」に答えが出ない。</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <h3>周知運用ルール</h3>
+          <ul>
+            <li>停止・正式廃止の通知はDX推進室長が一元発信。</li>
+            <li>ノーブレーム方針を明記し、個人・部署名義の発信は原則不要。</li>
+            <li>問合せ窓口は担当課に限定し、個人宛ての批判を回避。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="sessions">
+      <h2>セッション設計</h2>
+      <div class="grid two-col">
+        <article class="card reveal">
+          <h3>実施形式</h3>
+          <p><strong>全2回・各60分（別日）</strong></p>
+          <ul>
+            <li>セッション1：候補出し→停止へ</li>
+            <li>セッション2：結果判定→廃止案確定（庁議上程）</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <h3>参加者</h3>
+          <p>16名（4名 × 4チーム）。各チームは時間内で可能な範囲で2件以上の「やめる対象」を選定。</p>
+        </article>
+        <article class="card reveal">
+          <h3>ツール</h3>
+          <p>原村付箋共有ボードを使用。ワークショップの全工程をボード上で完結し、最終周知のみ庁内チャット。</p>
+        </article>
+      </div>
+
+      <div class="card reveal" style="margin-top:1.8rem;">
+        <div class="badge">セッション1｜候補出し → 停止へ</div>
+        <div class="timeline" style="margin-top:1.4rem;">
+          <div class="timeline-item">
+            <time>0–10分</time>
+            <h4>導入</h4>
+            <p>目的・ルール共有（人ではなく作業／法令最小要件は除外／ノーブレーム）。ボードにアクセス。</p>
+          </div>
+          <div class="timeline-item">
+            <time>10–20分</time>
+            <h4>静かな書き出し</h4>
+            <p>各自、付箋に「やめれる内容」「やめれる根拠」を記入。</p>
+          </div>
+          <div class="timeline-item">
+            <time>20–50分</time>
+            <h4>チーム判定・分類</h4>
+            <p>廃止案をチームで議論し、「廃止できない／一カ月廃止して様子を見る」に分類。</p>
+          </div>
+          <div class="timeline-item">
+            <time>50–60分</time>
+            <h4>共有</h4>
+            <p>各チーム30秒 × 選定件数（目安：最大5件）で共有。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card reveal" style="margin-top:1.8rem;">
+        <div class="badge">セッション2｜結果判定 → 廃止案の決定</div>
+        <div class="timeline" style="margin-top:1.4rem;">
+          <div class="timeline-item">
+            <time>0–15分</time>
+            <h4>結果共有</h4>
+            <p>付箋にBefore/Afterや数値を追記し、1件90秒で報告。</p>
+          </div>
+          <div class="timeline-item">
+            <time>15–35分</time>
+            <h4>廃止案判定</h4>
+            <p>重大支障がない場合は廃止案確定。苦情や問い合わせがあっても内容次第で廃止可。</p>
+          </div>
+          <div class="timeline-item">
+            <time>35–50分</time>
+            <h4>庁議上程セットの整備</h4>
+            <p>廃止案メモ・停止実験の結果要約・施行日案を整備し、付箋を「判定→廃止案」へ移動。</p>
+          </div>
+          <div class="timeline-item">
+            <time>50–60分</time>
+            <h4>締め</h4>
+            <p>廃止案件数と年間削減見込みhを合算し、庁議上程一覧を確認。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>停止実験から正式廃止まで</h2>
+      <div class="grid two-col">
+        <article class="card reveal">
+          <h3>セッション1後の周知</h3>
+          <p>DX推進室長が庁内チャットで「停止中（一カ月）」の情報を一元周知。個別攻撃を防ぐノーブレーム運用。</p>
+          <p><strong>投稿テンプレ（停止実験）</strong></p>
+          <p>#停止実験のお知らせ<br />対象：［作業名］（期間：YYYY/MM/DD〜YYYY/MM/DD）<br />担当：［課］／問合せ：［内線／メール］<br />目的：法令根拠がなく、住民価値への寄与が低い可能性があるため、一カ月停止して検証します。<br />お願い：支障があれば担当へお知らせください。<br />※ノーブレーム運用につき、個人・部署への批判はお控えください。</p>
+        </article>
+        <article class="card reveal">
+          <h3>庁議承認後の周知</h3>
+          <p>承認後はDX推進室長が正式廃止を告知。付箋を「庁議承認→正式廃止」へ。</p>
+          <p><strong>投稿テンプレ（正式廃止）</strong></p>
+          <p>#廃止のお知らせ<br />［作業名］は「やめるだけ」公式取組の合意にもとづき、庁議承認により本日付で廃止します。<br />一カ月の停止検証で重大な支障は確認されませんでした。<br />問合せ：［担当課・内線］<br />※ノーブレーム運用です。個人・部署への批判はお控えください。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>苦情・問い合わせの判定基準</h2>
+      <div class="grid two-col">
+        <article class="card reveal">
+          <h3>廃止を継続してよい例</h3>
+          <ul>
+            <li>周知不足の指摘・操作方法の質問。</li>
+            <li>「前の方が慣れている」等の個人的嗜好。</li>
+            <li>代替案内（別様式・ボード閲覧）で解消可能なケース。</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <h3>中断・再評価すべき例</h3>
+          <ul>
+            <li>法令・通達違反のおそれ。</li>
+            <li>住民の権利侵害（不公平・不利益）。</li>
+            <li>安全リスク／サービス停止級の滞留。</li>
+            <li>継続的かつ多数の苦情。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="board">
+      <h2>『原村付箋共有ボード』の構成と運用</h2>
+      <div class="card reveal">
+        <p><strong>グループ：</strong> INBOX → 維持 / 見直し / やめる候補 → 停止中（一カ月） → 判定→廃止案（庁議上程） / 判定→復帰 →（承認後）庁議承認→正式廃止</p>
+        <p><strong>付箋書式：</strong>タイトル＝作業名。本文＝頻度・手間（分）・根拠（URL/要綱/不明）・担当・停止開始日・監視項目。タグ＝チーム名・氏名。</p>
+      </div>
+      <div class="card reveal" style="margin-top:1.5rem;">
+        <h3>やめる具体例</h3>
+        <ul>
+          <li>全てのアナログ回覧 → 庁内チャット・付箋ボード・庁内ポータルに置換。</li>
+          <li>紙の庁内配布 → 庁内ポータル掲載＋チャットURL共有へ一本化。</li>
+          <li>内線は原則チャット（緊急・対外のみ電話）。</li>
+          <li>不必要な議事録 → 決定事項とToDoのみの短文化／ボード記録。</li>
+          <li>メールを印刷して回覧 → メール/チャットのリンク共有に一本化。</li>
+          <li>無駄な会議 → 目的・アウトプット定義の上、最小人数で臨時開催。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>FAQ</h2>
+      <dl class="faq card reveal">
+        <dt>法令の仕事もやめる？</dt>
+        <dd>いいえ。最小要件は維持。上乗せ・横出しのみ対象です。</dd>
+        <dt>苦情が1件でもあれば中止？</dt>
+        <dd>いいえ。重大性で判断します。判定基準の早見表をご覧ください。</dd>
+        <dt>数字のスコアは？</dt>
+        <dd>使いません。チームの話し合いと★投票で決定します。</dd>
+      </dl>
+    </section>
+
+    <section id="details">
+      <h2>実施情報</h2>
+      <div class="grid two-col">
+        <article class="card reveal">
+          <h3>実施日時・場所</h3>
+          <ul>
+            <li>2025年11月20日（木）10:00–11:00 ｜ 講堂</li>
+            <li>2025年12月19日（金）10:00–11:00 ｜ 201会議室</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <h3>事務局</h3>
+          <p>吉田、ロボフィス木村さん</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Harahara Digital Transformation Office © 2025</p>
+    </footer>
+  </main>
+  <script>
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.25,
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    document.querySelectorAll('.reveal').forEach((element) => {
+      revealObserver.observe(element);
+    });
+
+    const navLinks = Array.from(document.querySelectorAll('header nav a'));
+    const sections = navLinks
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+
+    const activeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('id');
+          const link = navLinks.find((anchor) => anchor.getAttribute('href') === `#${id}`);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            navLinks.forEach((anchor) => anchor.classList.remove('active'));
+            link.classList.add('active');
+          }
+        });
+      },
+      { threshold: 0.55 }
+    );
+
+    sections.forEach((section) => activeObserver.observe(section));
+
+    const header = document.querySelector('header');
+    const root = document.documentElement;
+
+    const setProgress = () => {
+      const scrollable = root.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+      root.style.setProperty('--scroll-progress', `${progress}%`);
+    };
+
+    const updateHeader = () => {
+      header.style.background = window.scrollY > 32 ? 'rgba(5, 7, 20, 0.9)' : 'rgba(5, 7, 20, 0.72)';
+      setProgress();
+    };
+
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    window.addEventListener('resize', setProgress);
+  </script>
+</body>
+</html>
