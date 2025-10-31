@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section">
+  <h2>{{ 'レコードの編集' if record else 'レコードの追加' }}</h2>
+  <form method="post">
+    <label for="title">タイトル</label>
+    <input id="title" name="title" type="text" value="{{ record['title'] if record else '' }}" required>
+
+    <label for="description">詳細</label>
+    <textarea id="description" name="description" rows="6">{{ record['description'] if record else '' }}</textarea>
+
+    <div class="form-actions">
+      <button class="button primary" type="submit">保存</button>
+      <a class="button secondary" href="{{ url_for('index') }}">一覧に戻る</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
