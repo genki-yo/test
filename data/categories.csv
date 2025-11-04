@@ -1,0 +1,7 @@
+category_id,category_name,color_hex,description
+burnable,Burnable Waste,#ff7043,General household waste that can be incinerated.
+recyclable,Recyclable Plastics,#29b6f6,Plastic containers and packaging marked with the recycle symbol.
+petbottles,PET Bottles,#66bb6a,Clear plastic beverage bottles rinsed and without caps.
+nonburnable,Non-burnable Waste,#ab47bc,Metal items, ceramics, and glass that cannot be burned.
+paper,Paper & Cardboard,#ffa726,Stacked newspapers, magazines, and cardboard tied with string.
+organic,Food & Garden Waste,#8d6e63,Kitchen scraps and garden trimmings for composting collections.

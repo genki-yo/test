@@ -1,0 +1,3 @@
+municipality_id,municipality_name,timezone,contact_url,notes
+hara,Hara Village (Nagano),Asia/Tokyo,https://www.vill.hara.lg.jp/,Official waste collection information is published on the village website.
+samplecity,Sample City,Asia/Tokyo,https://example.com/environment/waste,Demonstration dataset for municipalities preparing to onboard.

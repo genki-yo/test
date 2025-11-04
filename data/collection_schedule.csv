@@ -1,0 +1,13 @@
+municipality_id,area_id,date,category_id,note
+hara,central,2024-04-01,burnable,Put waste out by 8:00 at the community station.
+hara,central,2024-04-03,recyclable,Rinse plastics and remove labels.
+hara,central,2024-04-05,petbottles,Remove caps and crush bottles before placing in bags.
+hara,central,2024-04-08,burnable,Collection occurs twice per week in busy seasons.
+hara,central,2024-04-10,nonburnable,Wrap broken glass to prevent injury.
+hara,south,2024-04-02,burnable,Use the shared station near the cooperative.
+hara,south,2024-04-04,paper,Tie bundles with natural twine only.
+hara,south,2024-04-09,organic,Use compostable bags supplied by the village office.
+samplecity,downtown,2024-04-01,burnable,Night before drop-off is allowed after 20:00.
+samplecity,downtown,2024-04-06,nonburnable,Large appliances require a reservation.
+samplecity,north,2024-04-03,petbottles,Cap and label collection happens monthly.
+samplecity,north,2024-04-07,recyclable,Blue bags available at community centers.
