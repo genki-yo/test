@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ごみ収集カレンダー | Waste Collection Scheduler</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="page-header">
+    <div class="page-header__content">
+      <h1>ごみ収集カレンダー</h1>
+      <p>Googleスプレッドシートを更新するだけで運用できる、ごみ収集スケジュール管理アプリです。自治体ごとのデータを読み込み、地域・品目ごとの収集予定を確認できます。</p>
+      <a class="cta" href="#how-to-use">導入方法を見る</a>
+    </div>
+    <div class="page-header__illustration" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1528323273322-d81458248d40?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy">
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel" aria-labelledby="controls-title">
+      <div class="panel__header">
+        <h2 id="controls-title">地域を選択</h2>
+        <p>スプレッドシートに登録されている自治体と地区から選択してください。選択内容に応じて収集スケジュールが自動的に切り替わります。</p>
+      </div>
+      <div class="form-grid">
+        <label class="field">
+          <span class="field__label">自治体</span>
+          <select id="municipalitySelect" aria-describedby="municipalityHelp"></select>
+          <span class="field__help" id="municipalityHelp">自治体ごとにタイムゾーンや連絡先を設定できます。</span>
+        </label>
+        <label class="field">
+          <span class="field__label">地区</span>
+          <select id="areaSelect" disabled aria-describedby="areaHelp"></select>
+          <span class="field__help" id="areaHelp">地区を選ぶと、そのエリアのスケジュールが表示されます。</span>
+        </label>
+        <label class="field">
+          <span class="field__label">品目フィルター</span>
+          <div id="categoryFilters" class="category-filters" role="group" aria-label="品目フィルター"></div>
+        </label>
+        <label class="field">
+          <span class="field__label">キーワード検索</span>
+          <input id="searchInput" type="search" placeholder="例：段ボール、粗大ごみ">
+        </label>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="upcoming-title">
+      <div class="panel__header">
+        <h2 id="upcoming-title">直近の収集予定</h2>
+        <p>次に訪れる収集日を最大10件まで表示します。予定をそのままカレンダーに追加できるiCalendarファイルを生成することも可能です。</p>
+      </div>
+      <div class="actions">
+        <button id="icsButton" class="button" type="button" disabled>iCalendar (.ics) を作成</button>
+        <button id="shareButton" class="button button--secondary" type="button" disabled>この条件を共有</button>
+      </div>
+      <div id="upcomingList" class="card-list" role="list"></div>
+      <p id="noResultsMessage" class="empty" hidden>該当する収集予定が見つかりません。フィルターを調整してください。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="schedule-table-title">
+      <div class="panel__header">
+        <h2 id="schedule-table-title">一覧表</h2>
+        <p>スプレッドシートに登録されたスケジュールを一覧で確認できます。列ごとにソートし、印刷用スタイルにも対応しています。</p>
+      </div>
+      <div class="table-wrapper">
+        <table id="scheduleTable">
+          <thead>
+            <tr>
+              <th scope="col" data-sort="date">日付</th>
+              <th scope="col">曜日</th>
+              <th scope="col">品目</th>
+              <th scope="col">注意事項</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="legend-title">
+      <div class="panel__header">
+        <h2 id="legend-title">品目凡例</h2>
+        <p>品目ごとに色・説明文を設定できます。スプレッドシートを更新すると自動で反映されます。</p>
+      </div>
+      <ul id="legend" class="legend" role="list"></ul>
+    </section>
+
+    <section class="panel" id="how-to-use" aria-labelledby="how-title">
+      <div class="panel__header">
+        <h2 id="how-title">導入手順</h2>
+        <p>自治体ごとのスプレッドシートを更新することで、開発者以外でも簡単に運用できます。</p>
+      </div>
+      <ol class="howto">
+        <li><strong>テンプレートスプレッドシートを複製</strong> &mdash; Googleスプレッドシートに <code>municipalities</code> / <code>areas</code> / <code>categories</code> / <code>collection_schedule</code> の各シートを作成し、自治体の情報を入力します。</li>
+        <li><strong>自治体・地区を追加</strong> &mdash; <code>municipality_id</code> と <code>area_id</code> をユニークなIDとして設定し、地区名称や説明を入力します。</li>
+        <li><strong>収集スケジュールを記入</strong> &mdash; <code>collection_schedule</code> シートに日付（YYYY-MM-DD形式）、品目ID、注意事項を入力します。</li>
+        <li><strong>公開設定を変更</strong> &mdash; スプレッドシートを「リンクを知っている全員が閲覧可」にし、シェア用URLからスプレッドシートIDを確認します。</li>
+        <li><strong>利用開始</strong> &mdash; <code>app.js</code> の <code>CONFIG.googleSheets.spreadsheetId</code> にIDを設定すると、最新のスケジュールが自動的に読み込まれます。</li>
+      </ol>
+      <p class="panel__note">Googleスプレッドシートにアクセスできない場合は、自動的に <code>data</code> フォルダのCSVへフォールバックします。ローカルで検証したい場合に活用してください。</p>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <p>© 2024 Waste Collection Scheduler. このアプリはオープンデータを活用して誰でも再利用できるように設計されています。</p>
+  </footer>
+
+  <template id="cardTemplate">
+    <article class="card" role="listitem">
+      <header class="card__header">
+        <p class="card__date"></p>
+        <p class="card__category"></p>
+      </header>
+      <p class="card__note"></p>
+    </article>
+  </template>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
