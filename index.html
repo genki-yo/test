@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel ビジュアル関数ビルダー</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="background-glow"></div>
+    <header class="hero">
+      <div class="hero__content">
+        <h1>Excel ビジュアル関数ビルダー</h1>
+        <p>
+          ドラッグ&ドロップに近い直感操作で、Excel 関数を組み立てられるウェブアプリ。
+          オフィスワークをもっと創造的に。
+        </p>
+        <div class="hero__actions">
+          <button id="newFormulaBtn" class="btn primary">新しい式を作成</button>
+          <button id="tourBtn" class="btn ghost">クイックツアー</button>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="orb orb--one"></div>
+        <div class="orb orb--two"></div>
+        <div class="orb orb--three"></div>
+      </div>
+    </header>
+
+    <main class="app">
+      <section class="panel panel--left">
+        <h2>関数ライブラリ</h2>
+        <p class="panel__subtitle">よく使う Excel 関数をカテゴリー別に収録</p>
+        <div id="functionList" class="function-list"></div>
+      </section>
+
+      <section class="panel panel--center">
+        <div class="formula-header">
+          <div>
+            <h2>フォーミュラキャンバス</h2>
+            <p class="panel__subtitle">
+              関数カードをクリックするとキャンバスに追加されます。式はリアルタイムでプレビューされます。
+            </p>
+          </div>
+          <div class="formula-actions">
+            <button id="copyFormulaBtn" class="btn ghost">コピー</button>
+            <button id="clearFormulaBtn" class="btn ghost">クリア</button>
+          </div>
+        </div>
+        <div class="formula-display" id="formulaDisplay"></div>
+        <div class="formula-input">
+          <label for="formulaText">生成された Excel 形式の式</label>
+          <textarea id="formulaText" rows="4" spellcheck="false"></textarea>
+        </div>
+        <div class="hint-bar">
+          <span class="hint-bar__title">ヒント:</span>
+          <span id="hintText">関数カードを選択すると引数を入力するモーダルが開きます。</span>
+        </div>
+      </section>
+
+      <section class="panel panel--right">
+        <h2>データの下ごしらえ</h2>
+        <p class="panel__subtitle">
+          セル参照や演算子をクイック挿入したり、テンプレートを活用しましょう。
+        </p>
+        <div class="quick-actions">
+          <button class="btn secondary" data-insert="A1">A1</button>
+          <button class="btn secondary" data-insert="A1:A10">A1:A10</button>
+          <button class="btn secondary" data-insert=",">,</button>
+          <button class="btn secondary" data-insert="*">×</button>
+          <button class="btn secondary" data-insert="+">＋</button>
+          <button class="btn secondary" data-insert="-">−</button>
+          <button class="btn secondary" data-insert="/">÷</button>
+          <button class="btn secondary" data-insert="()">( )</button>
+        </div>
+        <div class="preset-card">
+          <h3>テンプレート</h3>
+          <ul>
+            <li data-template="=IF(A1&gt;10,\"高い\",\"低い\")">閾値チェック</li>
+            <li data-template="=VLOOKUP(A2,参照表!A:B,2,FALSE)">VLOOKUP サンプル</li>
+            <li data-template="=SUMIF(A:A,\"完了\",B:B)">条件付き合計</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <div id="functionModal" class="modal" aria-hidden="true">
+      <div class="modal__overlay" data-close="true"></div>
+      <div class="modal__content" role="dialog" aria-modal="true">
+        <header class="modal__header">
+          <div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalDescription"></p>
+          </div>
+          <button class="modal__close" data-close="true">×</button>
+        </header>
+        <form id="functionForm" class="modal__body"></form>
+        <footer class="modal__footer">
+          <button type="button" class="btn ghost" data-close="true">キャンセル</button>
+          <button type="submit" class="btn primary">キャンバスに追加</button>
+        </footer>
+      </div>
+    </div>
+
+    <div id="tourPopover" class="tour-popover" hidden>
+      <div class="tour-popover__body">
+        <h3>クイックツアー</h3>
+        <ol>
+          <li>左側の関数カードから目的の関数を選択</li>
+          <li>モーダルで引数を入力しキャンバスに追加</li>
+          <li>右側のショートカットを使ってセル参照や演算子を挿入</li>
+        </ol>
+      </div>
+      <button class="tour-popover__close">了解！</button>
+    </div>
+
+    <template id="functionCardTemplate">
+      <article class="function-card">
+        <div class="function-card__icon"></div>
+        <div class="function-card__body">
+          <div class="function-card__header">
+            <h3 class="function-card__title"></h3>
+            <span class="function-card__category"></span>
+          </div>
+          <p class="function-card__description"></p>
+          <button class="function-card__cta">キャンバスに追加</button>
+        </div>
+      </article>
+    </template>
+
+    <template id="formulaChipTemplate">
+      <span class="formula-chip"></span>
+    </template>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
