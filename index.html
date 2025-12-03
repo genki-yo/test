@@ -3,140 +3,146 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Excel ビジュアル関数ビルダー</title>
+    <title>議会録サーチライト</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="background-glow"></div>
     <header class="hero">
-      <div class="hero__content">
-        <h1>Excel ビジュアル関数ビルダー</h1>
+      <div class="hero__text">
+        <p class="eyebrow">議事録検索を、もっとシンプルに</p>
+        <h1>議会録サーチライト</h1>
         <p>
-          ドラッグ&ドロップに近い直感操作で、Excel 関数を組み立てられるウェブアプリ。
-          オフィスワークをもっと創造的に。
+          キーワード・発言者・日付で横断検索し、会議の文脈を素早く把握。
+          余計な画面遷移は不要です。
         </p>
         <div class="hero__actions">
-          <button id="newFormulaBtn" class="btn primary">新しい式を作成</button>
-          <button id="tourBtn" class="btn ghost">クイックツアー</button>
+          <button class="btn primary" id="focusKeyword">キーワードから検索</button>
+          <button class="btn ghost" id="resetFilters">条件をクリア</button>
         </div>
       </div>
-      <div class="hero__visual">
-        <div class="orb orb--one"></div>
-        <div class="orb orb--two"></div>
-        <div class="orb orb--three"></div>
+      <div class="hero__panel">
+        <div class="stat">
+          <span class="stat__label">掲載会議</span>
+          <strong id="meetingCount">0</strong>
+        </div>
+        <div class="stat">
+          <span class="stat__label">収録発言</span>
+          <strong id="speechCount">0</strong>
+        </div>
+        <p class="hero__note">デモデータで体験できます。</p>
       </div>
     </header>
 
-    <main class="app">
-      <section class="panel panel--left">
-        <h2>関数ライブラリ</h2>
-        <p class="panel__subtitle">よく使う Excel 関数をカテゴリー別に収録</p>
-        <div id="functionList" class="function-list"></div>
-      </section>
-
-      <section class="panel panel--center">
-        <div class="formula-header">
+    <main class="layout">
+      <section class="search">
+        <header class="section-header">
           <div>
-            <h2>フォーミュラキャンバス</h2>
-            <p class="panel__subtitle">
-              関数カードをクリックするとキャンバスに追加されます。式はリアルタイムでプレビューされます。
-            </p>
+            <p class="eyebrow">検索条件</p>
+            <h2>シンプル検索</h2>
+            <p class="muted">必要な軸だけで絞り込み。すべての条件は即時反映されます。</p>
           </div>
-          <div class="formula-actions">
-            <button id="copyFormulaBtn" class="btn ghost">コピー</button>
-            <button id="clearFormulaBtn" class="btn ghost">クリア</button>
+          <div class="hint">日付・委員会・発言者でクロス検索できます。</div>
+        </header>
+
+        <form id="searchForm" class="search__form">
+          <label class="field">
+            <span>キーワード</span>
+            <div class="field__inline">
+              <input
+                type="text"
+                id="keyword"
+                name="keyword"
+                placeholder="例: 防災訓練 / 予算 / 学校"
+              />
+              <button class="btn secondary" type="button" id="quickBudget">予算</button>
+              <button class="btn secondary" type="button" id="quickSafety">防災</button>
+            </div>
+          </label>
+
+          <div class="field grid-2">
+            <label>
+              <span>発言者</span>
+              <input
+                type="text"
+                id="speaker"
+                name="speaker"
+                placeholder="議員・首長名など"
+              />
+            </label>
+            <label>
+              <span>委員会・会議</span>
+              <select id="committee" name="committee">
+                <option value="">すべて</option>
+              </select>
+            </label>
           </div>
-        </div>
-        <div class="formula-display" id="formulaDisplay"></div>
-        <div class="formula-input">
-          <label for="formulaText">生成された Excel 形式の式</label>
-          <textarea id="formulaText" rows="4" spellcheck="false"></textarea>
-        </div>
-        <div class="hint-bar">
-          <span class="hint-bar__title">ヒント:</span>
-          <span id="hintText">関数カードを選択すると引数を入力するモーダルが開きます。</span>
-        </div>
+
+          <div class="field grid-2">
+            <label>
+              <span>開始日</span>
+              <input type="date" id="dateFrom" name="dateFrom" />
+            </label>
+            <label>
+              <span>終了日</span>
+              <input type="date" id="dateTo" name="dateTo" />
+            </label>
+          </div>
+
+          <div class="field grid-2">
+            <label>
+              <span>並び替え</span>
+              <select id="sort" name="sort">
+                <option value="desc">新しい順</option>
+                <option value="asc">古い順</option>
+              </select>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="onlyHighlights" /> 重要タグを含むものだけ
+            </label>
+          </div>
+
+          <div class="action-row">
+            <button class="btn primary" type="submit">検索する</button>
+            <span class="muted">条件は自動で保存されます。</span>
+          </div>
+        </form>
       </section>
 
-      <section class="panel panel--right">
-        <h2>データの下ごしらえ</h2>
-        <p class="panel__subtitle">
-          セル参照や演算子をクイック挿入したり、テンプレートを活用しましょう。
-        </p>
-        <div class="quick-actions">
-          <button class="btn secondary" data-insert="A1">A1</button>
-          <button class="btn secondary" data-insert="A1:A10">A1:A10</button>
-          <button class="btn secondary" data-insert=",">,</button>
-          <button class="btn secondary" data-insert="*">×</button>
-          <button class="btn secondary" data-insert="+">＋</button>
-          <button class="btn secondary" data-insert="-">−</button>
-          <button class="btn secondary" data-insert="/">÷</button>
-          <button class="btn secondary" data-insert="()">( )</button>
-        </div>
-        <div class="preset-card">
-          <h3>テンプレート</h3>
-          <ul>
-            <li data-template="=IF(A1&gt;10,\"高い\",\"低い\")">閾値チェック</li>
-            <li data-template="=VLOOKUP(A2,参照表!A:B,2,FALSE)">VLOOKUP サンプル</li>
-            <li data-template="=SUMIF(A:A,\"完了\",B:B)">条件付き合計</li>
-          </ul>
-        </div>
+      <section class="results">
+        <header class="section-header">
+          <div>
+            <p class="eyebrow">検索結果</p>
+            <h2><span id="resultCount">0</span> 件ヒット</h2>
+            <p class="muted">クリックすると右側で全文要約を確認できます。</p>
+          </div>
+          <div class="chips" id="activeFilters"></div>
+        </header>
+
+        <div id="resultList" class="result-list"></div>
       </section>
+
+      <aside class="detail" id="detailPanel">
+        <p class="eyebrow">内容プレビュー</p>
+        <h3 id="detailTitle">検索結果から発言を選択してください</h3>
+        <p class="muted" id="detailMeta"></p>
+        <div class="tag-row" id="detailTags"></div>
+        <p id="detailSummary" class="detail__summary"></p>
+        <div class="detail__actions">
+          <a id="detailLink" class="btn primary" href="#" target="_blank" rel="noopener">原文を開く</a>
+          <button class="btn ghost" id="copySummary">サマリーをコピー</button>
+        </div>
+      </aside>
     </main>
 
-    <div id="functionModal" class="modal" aria-hidden="true">
-      <div class="modal__overlay" data-close="true"></div>
-      <div class="modal__content" role="dialog" aria-modal="true">
-        <header class="modal__header">
-          <div>
-            <h3 id="modalTitle"></h3>
-            <p id="modalDescription"></p>
-          </div>
-          <button class="modal__close" data-close="true">×</button>
-        </header>
-        <form id="functionForm" class="modal__body"></form>
-        <footer class="modal__footer">
-          <button type="button" class="btn ghost" data-close="true">キャンセル</button>
-          <button type="submit" class="btn primary">キャンバスに追加</button>
-        </footer>
-      </div>
-    </div>
-
-    <div id="tourPopover" class="tour-popover" hidden>
-      <div class="tour-popover__body">
-        <h3>クイックツアー</h3>
-        <ol>
-          <li>左側の関数カードから目的の関数を選択</li>
-          <li>モーダルで引数を入力しキャンバスに追加</li>
-          <li>右側のショートカットを使ってセル参照や演算子を挿入</li>
-        </ol>
-      </div>
-      <button class="tour-popover__close">了解！</button>
-    </div>
-
-    <template id="functionCardTemplate">
-      <article class="function-card">
-        <div class="function-card__icon"></div>
-        <div class="function-card__body">
-          <div class="function-card__header">
-            <h3 class="function-card__title"></h3>
-            <span class="function-card__category"></span>
-          </div>
-          <p class="function-card__description"></p>
-          <button class="function-card__cta">キャンバスに追加</button>
-        </div>
-      </article>
-    </template>
-
-    <template id="formulaChipTemplate">
-      <span class="formula-chip"></span>
-    </template>
+    <footer class="footer">
+      <p>シンプルな議会録検索デモ。余計なページ遷移なしで議事録にアクセスできます。</p>
+    </footer>
 
     <script src="script.js" defer></script>
   </body>

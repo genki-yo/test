@@ -1,468 +1,351 @@
-const functions = [
+const records = [
   {
-    name: "SUM",
-    icon: "∑",
-    category: "集計",
-    description: "数値の合計を計算します。複数の範囲や値を一度に集約。",
-    args: [
-      {
-        label: "範囲 / 値",
-        placeholder: "A1:A10",
-        helper: "数値セルの範囲や直接の数値を入力 (カンマ区切り可)",
-      },
-    ],
-    template: (values) => `SUM(${values[0]})`,
+    id: 1,
+    title: "令和6年第2回 定例会 一般質問",
+    date: "2024-05-28",
+    speaker: "佐藤ゆかり",
+    committee: "本会議",
+    summary:
+      "防災訓練の地域参加率向上策と、避難所運営マニュアルの改訂スケジュールについて質問。市長から実践型訓練の増回と多言語対応の準備状況が報告された。",
+    tags: ["防災", "訓練", "多言語対応"],
+    highlight: true,
+    link:
+      "https://haramuragikai.gijiroku.com/voices/CGI/voiweb.exe?ACT=200&KGNO=155&FINO=691",
   },
   {
-    name: "AVERAGE",
-    icon: "Ø",
-    category: "集計",
-    description: "選択した範囲の平均値を求めます。",
-    args: [
-      {
-        label: "範囲 / 値",
-        placeholder: "B2:B20",
-        helper: "平均化したいセル範囲や値を入力",
-      },
-    ],
-    template: (values) => `AVERAGE(${values[0]})`,
+    id: 2,
+    title: "令和6年第1回 定例会 予算審査特別委員会",
+    date: "2024-03-12",
+    speaker: "原村市長",
+    committee: "予算特別委員会",
+    summary:
+      "令和6年度一般会計予算案の主要ポイントを説明。子育て支援の拡充、防災備蓄品の更新、ICT教育投資を重点化する方針を示した。",
+    tags: ["予算", "子育て", "ICT"],
+    highlight: true,
+    link:
+      "https://haramuragikai.gijiroku.com/voices/CGI/voiweb.exe?ACT=200&FINO=680",
   },
   {
-    name: "IF",
-    icon: "?",
-    category: "ロジック",
-    description: "条件に応じて結果を切り替える条件分岐を作成します。",
-    args: [
-      {
-        label: "論理式",
-        placeholder: "A1>10",
-        helper: "TRUE / FALSE を返す条件式",
-      },
-      {
-        label: "真の場合",
-        placeholder: '"OK"',
-        helper: "条件が TRUE のときの戻り値",
-      },
-      {
-        label: "偽の場合",
-        placeholder: '"NG"',
-        helper: "条件が FALSE のときの戻り値",
-      },
-    ],
-    template: (values) => `IF(${values[0]},${values[1]},${values[2]})`,
+    id: 3,
+    title: "総務産業委員会 所管事務調査",
+    date: "2023-11-08",
+    speaker: "田中信吾",
+    committee: "総務産業委員会",
+    summary:
+      "公共施設の統廃合方針に関する調査報告。老朽化が進む施設を減らし、地域コミュニティ拠点として複合化する案を提示。財政負担を抑えつつ利便性を確保する設計思想を説明。",
+    tags: ["公共施設", "財政", "地域拠点"],
+    highlight: false,
+    link: "https://haramuragikai.gijiroku.com/voices/",
   },
   {
-    name: "VLOOKUP",
-    icon: "⌕",
-    category: "検索",
-    description: "キーで表を検索し、指定列の値を返します。",
-    args: [
-      {
-        label: "検索値",
-        placeholder: "A2",
-        helper: "探したい値 (セル参照や文字列)",
-      },
-      {
-        label: "検索範囲",
-        placeholder: "参照表!A:D",
-        helper: "キー列を含む範囲 (最左列が検索対象)",
-      },
-      {
-        label: "列番号",
-        placeholder: "2",
-        helper: "取得したい値が存在する列番号",
-      },
-      {
-        label: "検索方法",
-        placeholder: "FALSE",
-        helper: "完全一致なら FALSE、近似なら TRUE",
-      },
-    ],
-    template: (values) => `VLOOKUP(${values.join(",")})`,
+    id: 4,
+    title: "文教厚生委員会 学校給食センター整備",
+    date: "2023-09-15",
+    speaker: "吉田まりこ",
+    committee: "文教厚生委員会",
+    summary:
+      "新給食センター整備計画の進捗報告。アレルギー対応ラインの導入や地元食材利用率の向上について質疑が交わされ、安全性とコストの両立を重視する方針が確認された。",
+    tags: ["学校給食", "安全", "地産地消"],
+    highlight: false,
+    link: "https://haramuragikai.gijiroku.com/voices/",
   },
   {
-    name: "TEXT",
-    icon: "Ab",
-    category: "テキスト",
-    description: "数値を任意の表示形式で文字列に変換します。",
-    args: [
-      {
-        label: "値",
-        placeholder: "A1",
-        helper: "フォーマットしたい数値または日付",
-      },
-      {
-        label: "表示形式",
-        placeholder: '"yyyy/mm/dd"',
-        helper: "Excel の表示形式を文字列で入力",
-      },
-    ],
-    template: (values) => `TEXT(${values[0]},${values[1]})`,
+    id: 5,
+    title: "環境委員会 再生可能エネルギー導入",
+    date: "2023-06-02",
+    speaker: "中村直樹",
+    committee: "環境委員会",
+    summary:
+      "公共施設への太陽光発電パネル設置計画と、地域マイクログリッド化の可能性を検討。初期費用と回収年数の試算、住民説明会の開催予定について議論された。",
+    tags: ["再エネ", "太陽光", "エネルギー計画"],
+    highlight: false,
+    link: "https://haramuragikai.gijiroku.com/voices/",
   },
   {
-    name: "CONCAT",
-    icon: "∞",
-    category: "テキスト",
-    description: "複数の文字列を結合して 1 つの文字列にします。",
-    args: [
-      {
-        label: "文字列",
-        placeholder: '"名前" , B2',
-        helper: "結合したい文字列やセル (カンマ区切り)",
-      },
-    ],
-    template: (values) => `CONCAT(${values[0]})`,
+    id: 6,
+    title: "令和5年第3回 定例会 子育て施策",
+    date: "2023-03-25",
+    speaker: "鈴木陽子",
+    committee: "本会議",
+    summary:
+      "子育て世帯への住宅補助と保育士確保策について質疑。人口減少対策として移住促進施策との連動も提案された。",
+    tags: ["子育て", "住宅", "保育"],
+    highlight: true,
+    link: "https://haramuragikai.gijiroku.com/voices/",
   },
   {
-    name: "SUMIF",
-    icon: "Σ*",
-    category: "集計",
-    description: "条件を満たすセルだけを合計します。",
-    args: [
-      {
-        label: "条件範囲",
-        placeholder: "A:A",
-        helper: "条件判定を行うセル範囲",
-      },
-      {
-        label: "条件",
-        placeholder: '"完了"',
-        helper: "合計対象とする条件 (例: ">=10")",
-      },
-      {
-        label: "合計範囲",
-        placeholder: "B:B",
-        helper: "合計するセル範囲 (省略可)",
-        optional: true,
-      },
-    ],
-    template: (values) => `SUMIF(${values.filter(Boolean).join(",")})`,
+    id: 7,
+    title: "経済建設委員会 道路改良計画",
+    date: "2022-12-10",
+    speaker: "小林正樹",
+    committee: "経済建設委員会",
+    summary:
+      "主要県道の渋滞緩和策として交差点改良と歩道拡幅を計画。工期短縮のため夜間工事を採用する案と、騒音対策の両立について検討が進められた。",
+    tags: ["道路", "交通", "インフラ"],
+    highlight: false,
+    link: "https://haramuragikai.gijiroku.com/voices/",
   },
   {
-    name: "XLOOKUP",
-    icon: "⌕",
-    category: "検索",
-    description: "最新の検索関数。どの方向にも柔軟に検索できます。",
-    args: [
-      {
-        label: "検索値",
-        placeholder: "B2",
-        helper: "探したい値",
-      },
-      {
-        label: "検索範囲",
-        placeholder: "顧客一覧!A:A",
-        helper: "検索対象となる範囲",
-      },
-      {
-        label: "戻り範囲",
-        placeholder: "顧客一覧!C:C",
-        helper: "結果として返したい範囲",
-      },
-      {
-        label: "見つからないとき",
-        placeholder: '"見つかりません"',
-        helper: "任意: 未検出時に返す値",
-        optional: true,
-      },
-    ],
-    template: (values) => `XLOOKUP(${values.filter(Boolean).join(",")})`,
-  },
-  {
-    name: "FILTER",
-    icon: "⧉",
-    category: "分析",
-    description: "条件に合致する行をフィルターして一覧で返します。",
-    args: [
-      {
-        label: "配列",
-        placeholder: "A1:D100",
-        helper: "抽出対象の範囲",
-      },
-      {
-        label: "条件",
-        placeholder: "(B1:B100=\"東京\")",
-        helper: "TRUE / FALSE を返す配列式",
-      },
-      {
-        label: "空の場合",
-        placeholder: '"該当なし"',
-        helper: "任意: 結果が空のときのメッセージ",
-        optional: true,
-      },
-    ],
-    template: (values) => `FILTER(${values.filter(Boolean).join(",")})`,
+    id: 8,
+    title: "環境委員会 廃棄物処理施設更新",
+    date: "2022-09-05",
+    speaker: "原村市長",
+    committee: "環境委員会",
+    summary:
+      "老朽化した焼却施設の更新計画と、広域連携によるコスト圧縮案を共有。再生可能エネルギー活用と温室効果ガス排出削減の目標値が示された。",
+    tags: ["廃棄物", "広域連携", "脱炭素"],
+    highlight: true,
+    link: "https://haramuragikai.gijiroku.com/voices/",
   },
 ];
 
-const formulaDisplay = document.getElementById("formulaDisplay");
-const formulaText = document.getElementById("formulaText");
-const hintText = document.getElementById("hintText");
-const functionList = document.getElementById("functionList");
-const modal = document.getElementById("functionModal");
-const modalTitle = document.getElementById("modalTitle");
-const modalDescription = document.getElementById("modalDescription");
-const modalForm = document.getElementById("functionForm");
-const copyFormulaBtn = document.getElementById("copyFormulaBtn");
-const clearFormulaBtn = document.getElementById("clearFormulaBtn");
-const quickActionButtons = document.querySelectorAll(".quick-actions .btn");
-const presetCard = document.querySelector(".preset-card ul");
-const newFormulaBtn = document.getElementById("newFormulaBtn");
-const tourBtn = document.getElementById("tourBtn");
-const tourPopover = document.getElementById("tourPopover");
-const tourCloseBtn = tourPopover.querySelector(".tour-popover__close");
+const keywordInput = document.getElementById("keyword");
+const speakerInput = document.getElementById("speaker");
+const committeeSelect = document.getElementById("committee");
+const dateFromInput = document.getElementById("dateFrom");
+const dateToInput = document.getElementById("dateTo");
+const sortSelect = document.getElementById("sort");
+const onlyHighlightsCheckbox = document.getElementById("onlyHighlights");
+const resultList = document.getElementById("resultList");
+const resultCount = document.getElementById("resultCount");
+const activeFilters = document.getElementById("activeFilters");
+const meetingCount = document.getElementById("meetingCount");
+const speechCount = document.getElementById("speechCount");
+const detailTitle = document.getElementById("detailTitle");
+const detailMeta = document.getElementById("detailMeta");
+const detailTags = document.getElementById("detailTags");
+const detailSummary = document.getElementById("detailSummary");
+const detailLink = document.getElementById("detailLink");
+const focusKeyword = document.getElementById("focusKeyword");
+const resetFilters = document.getElementById("resetFilters");
+const copySummary = document.getElementById("copySummary");
+const quickBudget = document.getElementById("quickBudget");
+const quickSafety = document.getElementById("quickSafety");
+const searchForm = document.getElementById("searchForm");
 
-let currentFormula = "";
-let caretPosition = 0;
+function initCommitteeOptions() {
+  const committees = Array.from(new Set(records.map((r) => r.committee))).sort();
+  committees.forEach((name) => {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    committeeSelect.appendChild(option);
+  });
+}
 
-const categories = {
-  集計: "gradient--violet",
-  ロジック: "gradient--green",
-  テキスト: "gradient--pink",
-  検索: "gradient--blue",
-  分析: "gradient--cyan",
-};
+function buildFilters() {
+  return {
+    keyword: keywordInput.value.trim(),
+    speaker: speakerInput.value.trim(),
+    committee: committeeSelect.value,
+    dateFrom: dateFromInput.value,
+    dateTo: dateToInput.value,
+    sort: sortSelect.value,
+    onlyHighlights: onlyHighlightsCheckbox.checked,
+  };
+}
 
-function renderFunctionCards() {
-  const template = document.getElementById("functionCardTemplate");
-  const fragment = document.createDocumentFragment();
+function withinDateRange(date, from, to) {
+  const target = new Date(date);
+  if (from && target < new Date(from)) return false;
+  if (to && target > new Date(to)) return false;
+  return true;
+}
 
-  functions.forEach((fn) => {
-    const clone = template.content.cloneNode(true);
-    const card = clone.querySelector(".function-card");
-    const icon = clone.querySelector(".function-card__icon");
-    const title = clone.querySelector(".function-card__title");
-    const category = clone.querySelector(".function-card__category");
-    const description = clone.querySelector(".function-card__description");
-    const cta = clone.querySelector(".function-card__cta");
+function normalize(text) {
+  return text.toLowerCase();
+}
 
-    icon.textContent = fn.icon;
-    title.textContent = fn.name;
-    category.textContent = fn.category;
-    description.textContent = fn.description;
+function matchKeyword(text, keyword) {
+  if (!keyword) return true;
+  const normalizedKeyword = normalize(keyword);
+  return normalize(text).includes(normalizedKeyword);
+}
 
-    card.classList.add(categories[fn.category] ?? "");
+function filterRecords(filters) {
+  const keyword = filters.keyword;
+  return records
+    .filter((record) =>
+      withinDateRange(record.date, filters.dateFrom, filters.dateTo)
+    )
+    .filter((record) =>
+      !filters.committee || record.committee === filters.committee
+    )
+    .filter((record) =>
+      !filters.speaker || matchKeyword(record.speaker, filters.speaker)
+    )
+    .filter((record) => {
+      if (filters.onlyHighlights) return record.highlight;
+      return true;
+    })
+    .filter((record) => {
+      if (!keyword) return true;
+      return (
+        matchKeyword(record.title, keyword) ||
+        matchKeyword(record.summary, keyword) ||
+        record.tags.some((tag) => matchKeyword(tag, keyword))
+      );
+    })
+    .sort((a, b) => {
+      if (filters.sort === "asc") return a.date.localeCompare(b.date);
+      return b.date.localeCompare(a.date);
+    });
+}
 
-    card.addEventListener("click", () => openFunctionModal(fn));
-    cta.addEventListener("click", (event) => {
-      event.stopPropagation();
-      openFunctionModal(fn);
+function highlight(text, keyword) {
+  if (!keyword) return text;
+  const safeKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(safeKeyword, "gi");
+  return text.replace(regex, (match) => `<mark>${match}</mark>`);
+}
+
+function renderActiveFilters(filters) {
+  activeFilters.innerHTML = "";
+  const chips = [];
+
+  if (filters.keyword) chips.push(`キーワード: ${filters.keyword}`);
+  if (filters.speaker) chips.push(`発言者: ${filters.speaker}`);
+  if (filters.committee) chips.push(filters.committee);
+  if (filters.dateFrom || filters.dateTo) {
+    chips.push(`期間: ${filters.dateFrom || "指定なし"} 〜 ${
+      filters.dateTo || "指定なし"
+    }`);
+  }
+  if (filters.onlyHighlights) chips.push("重要タグのみ");
+
+  chips.forEach((chip) => {
+    const span = document.createElement("span");
+    span.className = "chip";
+    span.textContent = chip;
+    activeFilters.appendChild(span);
+  });
+}
+
+function renderStats() {
+  const meetings = new Set(records.map((r) => r.title.split(" ")[0]));
+  meetingCount.textContent = meetings.size;
+  speechCount.textContent = records.length;
+}
+
+function renderDetail(record) {
+  if (!record) return;
+  detailTitle.textContent = record.title;
+  detailMeta.textContent = `${record.date} / ${record.committee} / ${record.speaker}`;
+  detailSummary.textContent = record.summary;
+  detailLink.href = record.link;
+
+  detailTags.innerHTML = "";
+  record.tags.forEach((tag) => {
+    const span = document.createElement("span");
+    span.className = "tag";
+    span.textContent = tag;
+    detailTags.appendChild(span);
+  });
+}
+
+function renderResults(filters) {
+  const filtered = filterRecords(filters);
+  resultList.innerHTML = "";
+  resultCount.textContent = filtered.length;
+  renderActiveFilters(filters);
+
+  if (filtered.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "該当する発言がありませんでした。条件を緩めてみてください。";
+    resultList.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach((record, index) => {
+    const item = document.createElement("article");
+    item.className = "result-card";
+    item.dataset.id = record.id;
+    item.innerHTML = `
+      <div class="result-card__meta">
+        <span class="pill">${record.date}</span>
+        <span class="pill pill--subtle">${record.committee}</span>
+      </div>
+      <h3>${highlight(record.title, filters.keyword)}</h3>
+      <p class="muted">${record.speaker}</p>
+      <p class="summary">${highlight(record.summary, filters.keyword)}</p>
+      <div class="tag-row">${record.tags
+        .map((tag) => `<span class="tag">${tag}</span>`)
+        .join("")}</div>
+    `;
+    if (record.highlight) {
+      item.classList.add("result-card--highlight");
+    }
+    item.addEventListener("click", () => {
+      renderDetail(record);
+      resultList.querySelectorAll(".result-card").forEach((card) =>
+        card.classList.remove("active")
+      );
+      item.classList.add("active");
     });
 
-    fragment.appendChild(clone);
-  });
+    resultList.appendChild(item);
 
-  functionList.appendChild(fragment);
-}
-
-function openFunctionModal(fn) {
-  modalTitle.textContent = `${fn.name} 関数`;
-  modalDescription.textContent = fn.description;
-  modalForm.innerHTML = "";
-
-  fn.args.forEach((arg, index) => {
-    const field = document.createElement("div");
-    field.className = "form-field";
-
-    const label = document.createElement("label");
-    label.textContent = arg.label + (arg.optional ? " (任意)" : "");
-    label.setAttribute("for", `arg-${index}`);
-
-    const input = document.createElement(arg.multiline ? "textarea" : "input");
-    input.id = `arg-${index}`;
-    input.name = `arg-${index}`;
-    input.placeholder = arg.placeholder ?? "";
-    input.required = !arg.optional;
-    if (arg.multiline) {
-      input.rows = 3;
+    if (index === 0) {
+      item.classList.add("active");
+      renderDetail(record);
     }
-
-    if (arg.helper) {
-      const helper = document.createElement("small");
-      helper.textContent = arg.helper;
-      field.append(label, input, helper);
-    } else {
-      field.append(label, input);
-    }
-
-    modalForm.appendChild(field);
-  });
-
-  modal.setAttribute("aria-hidden", "false");
-  modal.querySelector("input, textarea")?.focus();
-}
-
-function closeFunctionModal() {
-  modal.setAttribute("aria-hidden", "true");
-  modalForm.reset();
-}
-
-function insertAtCaret(text) {
-  const before = currentFormula.slice(0, caretPosition);
-  const after = currentFormula.slice(caretPosition);
-  currentFormula = before + text + after;
-  caretPosition = before.length + text.length;
-  updateFormulaView();
-}
-
-function updateFormulaView() {
-  const display = formulaDisplay;
-  display.innerHTML = "";
-
-  const normalized = currentFormula.trim();
-  if (!normalized) {
-    display.classList.add("empty");
-  } else {
-    display.classList.remove("empty");
-  }
-
-  const chipTemplate = document.getElementById("formulaChipTemplate");
-  const tokens = tokenizeFormula(normalized);
-
-  tokens.forEach((token) => {
-    const node = chipTemplate.content.firstElementChild.cloneNode(true);
-    node.textContent = token.value;
-    node.dataset.type = token.type;
-    display.appendChild(node);
-  });
-
-  formulaText.value = normalized ? `=${normalized}` : "";
-  hintText.textContent = normalized
-    ? "完成した式はコピーして Excel に貼り付けましょう。"
-    : "関数カードを選ぶか、右側のショートカットで式を組み立ててください。";
-
-  requestAnimationFrame(() => {
-    const hasEqual = formulaText.value.startsWith("=");
-    const baseOffset = hasEqual ? 1 : 0;
-    const selectionPosition = Math.min(
-      formulaText.value.length,
-      caretPosition + baseOffset
-    );
-    formulaText.setSelectionRange(selectionPosition, selectionPosition);
   });
 }
 
-function tokenizeFormula(formula) {
-  if (!formula) return [];
-
-  const matches = formula.match(/([A-Z]+(?=\())|([A-Z]+\d+)|([\+\-\*\/\^])|([=(),])|([^A-Z\d\+\-\*\/\^=(),]+)/gi);
-  if (!matches) return [{ value: formula, type: "text" }];
-
-  return matches.map((token) => {
-    if (/^[A-Z]+(?=\()/.test(token)) {
-      return { value: token, type: "function" };
-    }
-    if (/^[A-Z]+\d+$/i.test(token)) {
-      return { value: token, type: "reference" };
-    }
-    if (/^[\+\-\*\/\^]$/.test(token)) {
-      return { value: token, type: "operator" };
-    }
-    if (/^[=(),]$/.test(token)) {
-      return { value: token, type: "symbol" };
-    }
-    return { value: token.trim(), type: "text" };
-  });
+function restoreSavedFilters() {
+  const saved = JSON.parse(localStorage.getItem("searchFilters") || "{} ");
+  if (saved.keyword) keywordInput.value = saved.keyword;
+  if (saved.speaker) speakerInput.value = saved.speaker;
+  if (saved.committee) committeeSelect.value = saved.committee;
+  if (saved.dateFrom) dateFromInput.value = saved.dateFrom;
+  if (saved.dateTo) dateToInput.value = saved.dateTo;
+  if (saved.sort) sortSelect.value = saved.sort;
+  if (saved.onlyHighlights) onlyHighlightsCheckbox.checked = saved.onlyHighlights;
 }
 
-modal.addEventListener("click", (event) => {
-  if (event.target.dataset.close === "true") {
-    closeFunctionModal();
-  }
-});
+function persistFilters(filters) {
+  localStorage.setItem("searchFilters", JSON.stringify(filters));
+}
 
-modalForm.addEventListener("submit", (event) => {
+searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const formData = new FormData(modalForm);
-  const values = Array.from(formData.values()).map((value) => value.trim()).filter(Boolean);
-
-  const fnName = modalTitle.textContent.replace(" 関数", "");
-  const fn = functions.find((item) => item.name === fnName);
-  if (!fn) return;
-
-  const assembled = fn.template(values);
-  insertAtCaret(assembled);
-  closeFunctionModal();
+  const filters = buildFilters();
+  persistFilters(filters);
+  renderResults(filters);
 });
 
-functionList.addEventListener("scroll", () => {
-  hintText.textContent = "スクロールしてさらに多くの関数を探しましょう。";
+focusKeyword.addEventListener("click", () => keywordInput.focus());
+resetFilters.addEventListener("click", () => {
+  searchForm.reset();
+  persistFilters(buildFilters());
+  renderResults(buildFilters());
+});
+quickBudget.addEventListener("click", () => {
+  keywordInput.value = "予算";
+  renderResults(buildFilters());
+});
+quickSafety.addEventListener("click", () => {
+  keywordInput.value = "防災";
+  renderResults(buildFilters());
 });
 
-copyFormulaBtn.addEventListener("click", async () => {
-  if (!currentFormula) return;
-  const textToCopy = `=${currentFormula}`;
+copySummary.addEventListener("click", async () => {
+  const text = detailSummary.textContent;
+  if (!text) return;
   try {
-    await navigator.clipboard.writeText(textToCopy);
-    hintText.textContent = "コピーしました！Excel で Ctrl + V してください。";
+    await navigator.clipboard.writeText(text);
+    copySummary.textContent = "コピーしました";
+    setTimeout(() => (copySummary.textContent = "サマリーをコピー"), 1500);
   } catch (error) {
-    hintText.textContent = "コピーに失敗しました。手動で選択してください。";
+    copySummary.textContent = "コピーできませんでした";
+    setTimeout(() => (copySummary.textContent = "サマリーをコピー"), 1500);
   }
-});
-
-clearFormulaBtn.addEventListener("click", () => {
-  currentFormula = "";
-  caretPosition = 0;
-  updateFormulaView();
-});
-
-quickActionButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const value = button.dataset.insert;
-    if (value === "()") {
-      insertAtCaret("()");
-      caretPosition -= 1;
-    } else {
-      insertAtCaret(value);
-    }
-  });
-});
-
-presetCard.addEventListener("click", (event) => {
-  if (event.target.matches("li[data-template]")) {
-    const template = event.target.dataset.template.replace(/^=/, "");
-    currentFormula = template;
-    caretPosition = currentFormula.length;
-    updateFormulaView();
-    hintText.textContent = `${event.target.textContent} テンプレートを読み込みました。`;
-  }
-});
-
-formulaText.addEventListener("focus", () => {
-  caretPosition = currentFormula.length;
-});
-
-formulaText.addEventListener("keyup", (event) => {
-  const rawValue = event.target.value;
-  const value = rawValue.replace(/^=/, "");
-  currentFormula = value;
-  const rawPosition = event.target.selectionStart ?? rawValue.length;
-  caretPosition = Math.max(0, Math.min(value.length, rawPosition - 1));
-  updateFormulaView();
-});
-
-formulaText.addEventListener("click", (event) => {
-  const position = event.target.selectionStart ?? currentFormula.length;
-  caretPosition = Math.max(0, Math.min(currentFormula.length, position - 1));
-});
-
-newFormulaBtn.addEventListener("click", () => {
-  currentFormula = "";
-  caretPosition = 0;
-  updateFormulaView();
-  hintText.textContent = "新しい式を作成します。関数を選択しましょう。";
-  window.scrollTo({ top: document.querySelector("main").offsetTop, behavior: "smooth" });
-});
-
-tourBtn.addEventListener("click", () => {
-  tourPopover.hidden = false;
-});
-
-tourCloseBtn.addEventListener("click", () => {
-  tourPopover.hidden = true;
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderFunctionCards();
-  updateFormulaView();
+  initCommitteeOptions();
+  restoreSavedFilters();
+  renderStats();
+  renderResults(buildFilters());
 });
