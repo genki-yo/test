@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="toolbar">
+  <a class="button" href="{{ url_for('create_record') }}">＋ 新規レコード</a>
+</section>
+
+<section class="records">
+  {% if records %}
+    <table>
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>詳細</th>
+          <th>最終更新</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+          <tr>
+            <td class="title">{{ record['title'] }}</td>
+            <td class="description">{{ record['description'] or '（なし）' }}</td>
+            <td class="timestamp">{{ record['updated_at'] }}</td>
+            <td class="actions">
+              <a class="button secondary" href="{{ url_for('edit_record', record_id=record['id']) }}">編集</a>
+              <form method="post" action="{{ url_for('delete_record', record_id=record['id']) }}" onsubmit="return confirm('削除しますか？');">
+                <button class="button danger" type="submit">削除</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="empty">まだレコードがありません。「新規レコード」から追加しましょう。</p>
+  {% endif %}
+</section>
+{% endblock %}
